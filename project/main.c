@@ -14,10 +14,10 @@ int n = 0;
 
 
 int main(void) {
-	for(int i = 0; i<55; i++){
+	for(int i = 0; i<50; i++){
 		filter(getNextData());
 	}
-	for(int i = 0; i<55; i++){
+	for(int i = 0; i<50; i++){
 		printf("%d, ", x[i]);
 		printf("%d\n", y5[i]);
 	}
@@ -46,7 +46,7 @@ lowpass(){
 }
 
 highpass(){
-	y2[n]=y2[(n-1+size)%size]-y[n]/32.0+y[(n-16+size)%size]-y[(n-17+size)%size]+y[(n-32+size)%size]/32.0;
+	y2[n]=y2[(n-1+size)%size]-y[n]/32+y[(n-16+size)%size]-y[(n-17+size)%size]+y[(n-32+size)%size]/32;
 }
 
 derivative(){
