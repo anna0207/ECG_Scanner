@@ -3,6 +3,12 @@
 #include "sensor.h"
 
 int getNextData(){
-	// Implement me according to the Assignment 1 manual
+	static const char filename[] = "ECG.txt";
+	FILE *file = fopen(filename,"r");
+	int value;
+
+	fscanf(file, "%i", &value);
+	printf("%d\n", value);
+
 	return 0;
 }
