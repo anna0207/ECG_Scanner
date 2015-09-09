@@ -19,7 +19,7 @@ int main(void) {
 	}
 	for(int i = 0; i<55; i++){
 		printf("%d, ", x[i]);
-		printf("%d\n", y[i]);
+		printf("%d\n", y5[i]);
 	}
 
 	getNextData();
