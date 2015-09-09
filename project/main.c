@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include "sensor.h"
 
 #define size 50
 #define N 30
@@ -20,6 +21,8 @@ int main(void) {
 		printf("%d, ", x[i]);
 		printf("%d\n", y[i]);
 	}
+
+	getNextData();
 
 	return 0;
 }
