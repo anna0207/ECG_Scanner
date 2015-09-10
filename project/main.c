@@ -62,5 +62,7 @@ mwi(){
 	for(int i = 1; i <= N; i++){
 		ytemp += (y4[(n-(N-i)+size)%size]);
 	}
+	//matches x_mwi_div_after file
 	y5[n] = ytemp/N;
+
 }
