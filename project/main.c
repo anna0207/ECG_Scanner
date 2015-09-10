@@ -14,16 +14,17 @@ int n = 0;
 
 
 int main(void) {
-	for(int i = 0; i<50; i++){
+	int j = 0;
+	for(int i = 0; i<55; i++){
 		filter(getNextData());
+		if(i == 50){
+			j=0;
+		}
+		printf("%d, ", j);
+		printf("%d, ", x[j]);
+		printf("%d\n", y5[j]);
+		j++;
 	}
-	for(int i = 0; i<50; i++){
-		printf("%d, ", x[i]);
-		printf("%d\n", y5[i]);
-	}
-
-	getNextData();
-
 	return 0;
 }
 
@@ -35,7 +36,6 @@ filter(int data){
 	derivative();
 	squaring();
 	mwi();
-
 	n++;
 	if(n >= size){
 		n = 0;
