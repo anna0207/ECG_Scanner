@@ -11,17 +11,22 @@ int main(void) {
 	int deriv[31] = {0};
 	int squar[31] = {0};
 	int mwi[3] = {0};
-	int peaks[2][8] = {{0}};
+	int time[8] = {0};
+	int peaks[8] = {0};
+	int rPeaks[8] = {0};
 
-	for(int i = 0; i<55; i++){
+	for(int i = 0; i<155; i++){
 		data[i%13] = getNextData();
 		lowpass(data, lowPass, 13, 33, i);
 		highpass(lowPass, highPass, 33, 5, i);
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		searchPeaks(mwi, i, peaks);
-		printf("n = %d, x = %d, y = %d\n", i+1, squar[i%31], mwi[i%3]);
+		printf("n = %d\n", i);
+		findPeaks(mwi, i, time, peaks, rPeaks);
+		if(rPeaks[i%8] != 0){
+			printf("n = %d, rPeaks = %d\n", i+1, rPeaks[i%8]);
+		}
 	}
 	return 0;
 }

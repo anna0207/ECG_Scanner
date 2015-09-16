@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 #include "filter.h"
 
 void lowpass(int x[], int *y, int inputSize, int outputSize, int n){

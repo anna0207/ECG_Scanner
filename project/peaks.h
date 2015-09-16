@@ -1,2 +1,2 @@
-void searchPeaks(int filterData[], int time, int **peaks);
-void threshold(int **peaks, int peakCounter);
+void findPeaks(int filterData[], int sample, int time[], int peaks[], int rPeaks[]);
+void threshold(int time[], int peaks[], int rPeaks[], int peakCounter);
