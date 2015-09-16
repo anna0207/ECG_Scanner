@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "Filter.h"
+
+#include "filter.h"
 
 void lowpass(int x[], int *y, int inputSize, int outputSize, int n){
 	y[n%outputSize] = (2*y[(n-1+outputSize)%outputSize]-y[(n-2+outputSize)%outputSize]+(x[n%inputSize]-2*x[(n-6+inputSize)%inputSize]+x[(n-12+inputSize)%inputSize])/32);
