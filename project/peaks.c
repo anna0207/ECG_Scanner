@@ -7,13 +7,10 @@ void findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
 	int mid = (newData-1+3)%3;
 	int first = (newData-2+3)%3;
 	if (data[mid] > data[first] && data[mid] > data[newData]) {
-		time[peakCounter] = sample-1;
-		peaks[peakCounter] = data[mid];
+		time[peakCounter%8] = sample-1;
+		peaks[peakCounter%8] = data[mid];
 		threshold(time, peaks, rPeaks, peakCounter);
 		peakCounter++;
-	}
-	if (peakCounter >= 8){
-		peakCounter = 0;
 	}
 }
 
@@ -26,33 +23,27 @@ void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int recentRR_OK[8] = {0};
 	static int recentRR[8] = {0};
 
-	if (peaks[peakCounter] > threshold1) {
-		int rr = time[peakCounter]-time[peakCounter-1];
+	if (peaks[peakCounter%8] > threshold1) {
+		int rr = time[peakCounter%8]-time[(peakCounter-1+8)%8];
 		if (rr > rrLow && rr < rrHigh) {
-			rPeaks[rCounter] = rr;
+			rPeaks[rCounter%8] = rr;
 
-			spkf = 0.125*peaks[peakCounter] + 0.875*spkf;
-			recentRR_OK[rCounter] = rr;
-			recentRR[rCounter] = rr;
-
-			//Get number of rPeaks saved
-			int numberRPeaks = 8;
-			if(rCounter < 8){
-				numberRPeaks = rCounter+1;
-			}
+			spkf = 0.125*peaks[peakCounter%8] + 0.875*spkf;
+			recentRR_OK[rCounter%8] = rr;
+			recentRR[rCounter%8] = rr;
 
 			int sumRR_OK = 0;
 			for (int i = 0; i < 8; i++) {
 				sumRR_OK += recentRR_OK[i];
 			}
-			rrAvg2 = sumRR_OK/numberRPeaks;
+			rrAvg2 = sumRR_OK/8;
 
 
 			int sumRR = 0;
 			for (int j = 0; j < 8; j++) {
 				sumRR += recentRR[j];
 			}
-			rrAvg1 = sumRR/numberRPeaks;
+			rrAvg1 = sumRR/8;
 
 			rrLow = 0.92*rrAvg2;
 			rrHigh = 1.16*rrAvg2;
@@ -67,26 +58,31 @@ void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			while(peaks[7-i] <= threshold2 && i < 8) {
 				i++;
 			}
-			int rPeak = peaks[7-i];
-			rPeaks[rCounter] = rPeak;
+			if (i != 8) {
+				int rPeak = peaks[7-i];
+				rPeaks[rCounter%8] = rPeak;
 
-			spkf = 0.25*peaks[peakCounter] + 0.75*spkf;
-			recentRR[rCounter] = rr;
-			int sumRR = 0;
-			for (int j = 0; j < 8; j++) {
-				sumRR += recentRR[j];
+				spkf = 0.25*peaks[peakCounter%8] + 0.75*spkf;
+				recentRR[rCounter%8] = rr;
+
+				int sumRR = 0;
+				for (int j = 0; j < 8; j++) {
+					sumRR += recentRR[j];
+				}
+				rrAvg1 = sumRR/8;
+				rrLow = rrAvg1*0.92;
+				rrHigh = rrAvg1*1.16;
+				rrMiss = rrAvg1*1.66;
+				threshold1 = npkf + 0.25*(spkf-npkf);
+				threshold2 = 0.5*threshold1;
 			}
-			rrAvg1 = sumRR/8;
-			rrLow = rrAvg1*0.92;
-			rrHigh = rrAvg1*1.16;
-			rrMiss = rrAvg1*1.66;
-			threshold1 = npkf + 0.25*(spkf-npkf);
-			threshold2 = 0.5*threshold1;
+			rCounter++;
 		}
 
 	} else {
-		npkf = 0.125*peaks[peakCounter] + 0.875*npkf;
+		npkf = 0.125*peaks[peakCounter%8] + 0.875*npkf;
 		threshold1 = npkf + 0.25*(spkf-npkf);
 		threshold2 = threshold1*0.5;
 	}
+	printf("%d, %d\n", threshold1, threshold2);
 }

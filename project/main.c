@@ -15,17 +15,17 @@ int main(void) {
 	int peaks[8] = {0};
 	int rPeaks[8] = {0};
 
-	for(int i = 0; i<155; i++){
+	for(int i = 0; i<2000; i++){
 		data[i%13] = getNextData();
 		lowpass(data, lowPass, 13, 33, i);
 		highpass(lowPass, highPass, 33, 5, i);
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		printf("n = %d\n", i);
+		//printf("n = %d\n", i);
 		findPeaks(mwi, i, time, peaks, rPeaks);
 		if(rPeaks[i%8] != 0){
-			printf("n = %d, rPeaks = %d\n", i+1, rPeaks[i%8]);
+			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i+1, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
 		}
 	}
 	return 0;
