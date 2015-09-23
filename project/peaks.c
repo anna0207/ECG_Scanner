@@ -1,20 +1,22 @@
 #include <stdio.h>
 #include "peaks.h"
 
-void findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
+int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
 	static int peakCounter = 0;
+	int counter = -1;
 	int newData = sample%3;
 	int mid = (newData-1+3)%3;
 	int first = (newData-2+3)%3;
 	if (data[mid] > data[first] && data[mid] > data[newData]) {
 		time[peakCounter%8] = sample-1;
 		peaks[peakCounter%8] = data[mid];
-		threshold(time, peaks, rPeaks, peakCounter);
+		counter = threshold(time, peaks, rPeaks, peakCounter);
 		peakCounter++;
 	}
+	return counter;
 }
 
-void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
+int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int spkf, npkf, threshold1, threshold2;
 	static int rrMiss, rrAvg1, rrAvg2;
 	static int rrLow = 0;
@@ -22,11 +24,13 @@ void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int rCounter = 0;
 	static int recentRR_OK[8] = {0};
 	static int recentRR[8] = {0};
+	int found = 0;
 
 	if (peaks[peakCounter%8] > threshold1) {
 		int rr = time[peakCounter%8]-time[(peakCounter-1+8)%8];
 		if (rr > rrLow && rr < rrHigh) {
 			rPeaks[rCounter%8] = rr;
+			found = 1;
 
 			spkf = 0.125*peaks[peakCounter%8] + 0.875*spkf;
 			recentRR_OK[rCounter%8] = rr;
@@ -61,6 +65,7 @@ void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			if (i != 8) {
 				int rPeak = peaks[7-i];
 				rPeaks[rCounter%8] = rPeak;
+				found = 1;
 
 				spkf = 0.25*peaks[peakCounter%8] + 0.75*spkf;
 				recentRR[rCounter%8] = rr;
@@ -84,5 +89,11 @@ void threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 		threshold1 = npkf + 0.25*(spkf-npkf);
 		threshold2 = threshold1*0.5;
 	}
-	printf("%d, %d\n", threshold1, threshold2);
+
+	if(found == 1) {
+		return rCounter-1;
+	} else {
+		return -1;
+	}
+
 }
