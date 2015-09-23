@@ -23,13 +23,11 @@ int main(void) {
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		//printf("n = %d\n", i);
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
+		//if(counter != -1){
+		//	printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
+		//}
 		if(counter != -1){
-			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
-		}
-		if(counter != -1){
-			int timer = i/250*100+(i/25);
 			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter], i/250, 60000/((time[counter%8]-time[(counter-1+8)%8])*1000/250));
 		}
 
