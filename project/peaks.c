@@ -52,7 +52,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			rrAvg1 = sumRR/8;
 
 			rrLow = 0.92*rrAvg2;
-			rrHigh = 1.30*rrAvg2;
+			rrHigh = 1.40*rrAvg2;
 			rrMiss = 1.66*rrAvg2;
 			threshold1 = npkf + 0.25*(spkf-npkf);
 			threshold2 = 0.5*threshold1;
@@ -82,7 +82,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 				}
 				rrAvg1 = sumRR/8;
 				rrLow = rrAvg1*0.92;
-				rrHigh = rrAvg1*1.30;
+				rrHigh = rrAvg1*1.40;
 				rrMiss = rrAvg1*1.66;
 				threshold1 = npkf + 0.25*(spkf-npkf);
 				threshold2 = 0.5*threshold1;

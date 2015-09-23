@@ -16,21 +16,20 @@ int main(void) {
 	int rPeaks[8] = {0};
 	int counter = 0;
 
-	for(int i = 0; i<2000; i++){
+	for(int i = 0; i<5000; i++){
 		data[i%13] = getNextData();
 		lowpass(data, lowPass, 13, 33, i);
 		highpass(lowPass, highPass, 33, 5, i);
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		//printf("n = %d\n", i);
-		if (i == 1100){
+		if (i == 3294){
 			printf("ln");
 		}
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
 		if(counter != -1){
 			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
-			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter], i/250, 60000/((time[counter%8]-time[(counter-1+8)%8])*1000/250));
+			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter%8], i/250, 60000/((time[counter%8]-time[(counter-1+8)%8])*1000/250));
 			if(rPeaks[counter]<2000) {
 				printf("WARNING! low R-peak value\n");
 			}
