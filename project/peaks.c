@@ -23,7 +23,6 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int rrMiss, rrAvg1, rrAvg2;
 	static int rrLow = 0;
 	static int rrHigh = 0;
-	static int rCounter = 0;
 	static int recentRR_OK[8] = {0};
 	static int recentRR[8] = {0};
 	int found = 0;
@@ -31,12 +30,12 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	if (peaks[peakCounter%8] > threshold1) {
 		int rr = time[peakCounter%8]-time[(peakCounter-1+8)%8];
 		if (rr > rrLow && rr < rrHigh) {
-			rPeaks[rCounter%8] = rr;
+			rPeaks[peakCounter%8] = peaks[peakCounter%8];
 			found = 1;
 
 			spkf = 0.125*peaks[peakCounter%8] + 0.875*spkf;
-			recentRR_OK[rCounter%8] = rr;
-			recentRR[rCounter%8] = rr;
+			recentRR_OK[peakCounter%8] = rr;
+			recentRR[peakCounter%8] = rr;
 
 			int sumRR_OK = 0;
 			for (int i = 0; i < 8; i++) {
@@ -52,12 +51,11 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			rrAvg1 = sumRR/8;
 
 			rrLow = 0.92*rrAvg2;
-			rrHigh = 1.16*rrAvg2;
+			rrHigh = 1.30*rrAvg2;
 			rrMiss = 1.66*rrAvg2;
 			threshold1 = npkf + 0.25*(spkf-npkf);
 			threshold2 = 0.5*threshold1;
 
-			rCounter++;
 		} else if (rr > rrMiss) {
 			//Search backwards
 			int i = 0;
@@ -66,11 +64,11 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			}
 			if (i != 8) {
 				int rPeak = peaks[7-i];
-				rPeaks[rCounter%8] = rPeak;
+				rPeaks[peakCounter%8] = rPeak;
 				found = 1;
 
-				spkf = 0.25*peaks[peakCounter%8] + 0.75*spkf;
-				recentRR[rCounter%8] = rr;
+				spkf = 0.25*rPeak + 0.75*spkf;
+				recentRR[peakCounter%8] = rr;
 
 				int sumRR = 0;
 				for (int j = 0; j < 8; j++) {
@@ -78,14 +76,13 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 				}
 				rrAvg1 = sumRR/8;
 				rrLow = rrAvg1*0.92;
-				rrHigh = rrAvg1*1.16;
+				rrHigh = rrAvg1*1.30;
 				rrMiss = rrAvg1*1.66;
 				threshold1 = npkf + 0.25*(spkf-npkf);
 				threshold2 = 0.5*threshold1;
 			}
-			rCounter++;
+			peakCounter++;
 		}
-
 	} else {
 		npkf = 0.125*peaks[peakCounter%8] + 0.875*npkf;
 		threshold1 = npkf + 0.25*(spkf-npkf);
@@ -93,9 +90,8 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	}
 
 	if(found == 1) {
-		return rCounter-1;
+		return peakCounter-1;
 	} else {
 		return -1;
 	}
-
 }
