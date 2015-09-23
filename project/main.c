@@ -30,7 +30,10 @@ int main(void) {
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
 		if(counter != -1){
 			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
-			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter%8], i/250, 60*(time[counter%8]-time[(counter-1+8)%8])/250);
+			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter], i/250, 60000/((time[counter%8]-time[(counter-1+8)%8])*1000/250));
+			if(rPeaks[counter]<2000) {
+				printf("WARNING! low R-peak value\n");
+			}
 		}
 
 	}
