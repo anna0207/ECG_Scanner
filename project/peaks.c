@@ -27,6 +27,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int recentRR_OK[8] = {0};
 	static int recentRR[8] = {0};
 	int found = 0;
+	int warningCounter = 0;
 
 	if (peaks[peakCounter%8] > threshold1) {
 		int rr = time[peakCounter%8]-time[(peakCounter-1+8)%8];
@@ -58,7 +59,13 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			threshold2 = 0.5*threshold1;
 
 			rCounter++;
-		} else if (rr > rrMiss) {
+			warningCounter = 0;
+		} else {
+			warningCounter++;
+			if (warningCounter >= 5) {
+				printf("WARNING! Unstable heartbeat");
+			}
+		} if (rr > rrMiss) {
 			//Search backwards
 			int i = 0;
 			while(peaks[7-i] <= threshold2 && i < 8) {
