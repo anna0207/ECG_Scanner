@@ -25,14 +25,18 @@ int main(void) {
 		movingWindow(squar, mwi, 31, 3, i);
 		//printf("n = %d\n", i);
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
-		//if(counter != -1){
-		//	printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i+1, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
-		//}
 		if(counter != -1){
-			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n", rPeaks[counter], i/250, 60*(time[counter%8]-time[(counter-1+8)%8])/250);
-			printf("time[counter%8] = %d, time[(counter-1+8)%8] = %d \n\n", time[counter%8], time[(counter-1+8)%8]);
+			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
+		}
+		if(counter != -1){
+			//static int hold = 0;
+			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter], i/250, 60*(time[counter%8]-time[(counter-1+8)%8])/250);
+			//hold = i;
+			//printf("time[counter%8] = %d, time[(counter-1+8)%8] = %d \n", time[counter%8], time[(counter-1+8)%8]);
+			//printf("Time: %d, %d, %d, %d, %d, %d, %d, %d\n\n", time[0], time[1], time[2], time[3], time[4], time[5], time[6], time[7]);
 		}
 
 	}
+
 	return 0;
 }

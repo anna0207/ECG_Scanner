@@ -11,7 +11,9 @@ int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
 		time[peakCounter%8] = sample-1;
 		peaks[peakCounter%8] = data[mid];
 		counter = threshold(time, peaks, rPeaks, peakCounter);
-		peakCounter++;
+		if(counter != -1) {
+			peakCounter++;
+		}
 	}
 	return counter;
 }
