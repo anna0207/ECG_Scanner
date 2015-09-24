@@ -23,9 +23,10 @@ int main(void) {
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		if (i == 4000){
+		if (i == 4092){
 			printf("ln");
 		}
+		printf("%d\n", i);
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
 		if(counter != -1){
 			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );

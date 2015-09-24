@@ -8,7 +8,7 @@ int getNextData(){
 	static const char filename[] = "ECG.txt";
 	FILE *file = fopen(filename,"r");
 	int value;
-
+	printf("%d\n", counter);
 	if(fscanf(file, "%i", &value)!=EOF){
 		for(int j = 0; j<counter; j++){
 			fscanf(file, "%i", &value);
