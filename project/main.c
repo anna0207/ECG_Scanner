@@ -23,7 +23,7 @@ int main(void) {
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		if (i == 783){
+		if (i == 4000){
 			printf("ln");
 		}
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);
@@ -34,8 +34,6 @@ int main(void) {
 				printf("WARNING! low R-peak value\n");
 			}
 		}
-
 	}
-
 	return 0;
 }

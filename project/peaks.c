@@ -1,8 +1,20 @@
 #include <stdio.h>
 #include "peaks.h"
 
+int spkf = 4000;
+int npkf = 2000;
+int threshold1 = 2000 + (4000 - 2000) / 4;
+int threshold2 = (2000 + (4000 - 2000) / 4) / 2;
+int rrAvg1 = 151;
+int rrAvg2 = 151;
+int rrMiss = 1.66 * 151;
+int rrLow = 0.92 * 151;
+int rrHigh = 1.16 * 151;
+int recentRR_OK[8] = { 0 };
+int recentRR[8] = { 0 };
+int peakCounter = 0;
+
 int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
-	static int peakCounter = 0;
 	int counter = -1;
 	int newData = sample % 3;
 	int mid = (newData - 1 + 3) % 3;
@@ -19,22 +31,12 @@ int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
 }
 
 int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
-	static int spkf = 4500;
-	static int npkf = 200;
-	static int threshold1 = 200 + (4500-200)/4;
-	static int threshold2 = (200 + (4500-200)/4)/2;
-	static int rrAvg1 = 162;
-	static int rrAvg2 = 162;
-	static int rrMiss = 162 * 1.66;
-	static int rrLow = 162 * 0.92;
-	static int rrHigh = 162 * 1.16;
-	static int recentRR_OK[8] = { 0 };
-	static int recentRR[8] = { 0 };
 	int found = 0;
 	int warningCounter = 0;
 
 	if (peaks[peakCounter % 8] > threshold1) {
 		int rr = time[peakCounter % 8] - time[(peakCounter - 1 + 8) % 8];
+		//printf("\nLow: %d, High: %d, Time: %d\n",rrLow,rrHigh,time[peakCounter % 8]);
 		if (rr > rrLow && rr < rrHigh) {
 			rPeaks[peakCounter % 8] = peaks[peakCounter % 8];
 			found = 1;
@@ -43,18 +45,22 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			recentRR_OK[peakCounter % 8] = rr;
 			recentRR[peakCounter % 8] = rr;
 
+			int n = 0;
+			if (8 >= peakCounter) {
+				n++;
+			}
+
 			int sumRR_OK = 0;
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < n; i++) {
 				sumRR_OK += recentRR_OK[i];
 			}
-			rrAvg2 = sumRR_OK / 8;
+			rrAvg2 = sumRR_OK / n;
 
 			int sumRR = 0;
-			for (int j = 0; j < 8; j++) {
-				sumRR += recentRR[j];
+			for (int j = 0; j < n; j++) {
+				sumRR = recentRR[j];
 			}
-			rrAvg1 = sumRR / 8;
-			printf("Av2: %d\n", rrAvg2);
+			rrAvg1 = sumRR / n;
 			rrLow = 0.92 * rrAvg2;
 			rrHigh = 1.16 * rrAvg2;
 			rrMiss = 1.66 * rrAvg2;
@@ -81,12 +87,16 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 					spkf = 0.25 * rPeak + 0.75 * spkf;
 					recentRR[peakCounter % 8] = rr;
 
+					int n = 0;
+					if (8 >= peakCounter) {
+						n++;
+					}
+
 					int sumRR = 0;
-					for (int j = 0; j < 8; j++) {
+					for (int j = 0; j < n; j++) {
 						sumRR += recentRR[j];
 					}
-					printf("Av1: %d\n", rrAvg1);
-					rrAvg1 = sumRR / 8;
+					rrAvg1 = sumRR / n;
 					rrLow = rrAvg1 * 0.92;
 					rrHigh = rrAvg1 * 1.16;
 					rrMiss = rrAvg1 * 1.66;
@@ -103,7 +113,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	}
 
 	if (found == 1) {
-		return peakCounter - 1;
+		return peakCounter;
 	} else {
 		return -1;
 	}
