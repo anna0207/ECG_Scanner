@@ -23,7 +23,7 @@ int main(void) {
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		if (i == 3294){
+		if (i == 783){
 			printf("ln");
 		}
 		counter = findPeaks(mwi, i, time, peaks, rPeaks);

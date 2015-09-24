@@ -21,11 +21,13 @@ int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
 int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	static int spkf = 4500;
 	static int npkf = 200;
-	static int threshold1;
-	static int threshold2;
-	static int rrMiss, rrAvg1, rrAvg2;
-	static int rrLow = 0;
-	static int rrHigh = 0;
+	static int threshold1 = 200 + (4500-200)/4;
+	static int threshold2 = (200 + (4500-200)/4)/2;
+	static int rrAvg1 = 162;
+	static int rrAvg2 = 162;
+	static int rrMiss = 162 * 1.66;
+	static int rrLow = 162 * 0.92;
+	static int rrHigh = 162 * 1.16;
 	static int recentRR_OK[8] = { 0 };
 	static int recentRR[8] = { 0 };
 	int found = 0;
@@ -65,6 +67,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 				printf("WARNING! Unstable heartbeat");
 			}
 			if (rr > rrMiss) {
+				printf("MISS");
 				//Search backwards
 				int i = 0;
 				while (peaks[7 - i] <= threshold2 && i < 8) {
