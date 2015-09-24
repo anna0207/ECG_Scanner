@@ -15,19 +15,19 @@ int recentRR[8] = { 0 };
 int peakCounter = 0;
 
 int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
-	int counter = -1;
+	int foundRPeak = -1;
 	int newData = sample % 3;
 	int mid = (newData - 1 + 3) % 3;
 	int first = (newData - 2 + 3) % 3;
 	if (data[mid] > data[first] && data[mid] > data[newData]) {
-		time[peakCounter % 8] = sample - 1;
+		time[peakCounter % 8] = sample-1;
 		peaks[peakCounter % 8] = data[mid];
-		counter = threshold(time, peaks, rPeaks, peakCounter);
-		if (counter != -1) {
+		foundRPeak = threshold(time, peaks, rPeaks, peakCounter);
+		if (foundRPeak != -1) {
 			peakCounter++;
 		}
 	}
-	return counter;
+	return foundRPeak;
 }
 
 int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
