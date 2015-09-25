@@ -4,8 +4,8 @@
 int peaks[8] = {0};
 int spkf = 4000;
 int npkf = 1500;
-int threshold1 = 300 + (4000 - 2000) *0.25;
-int threshold2 = (1500 + (4000 - 2000) / 4) *0.5;
+int threshold1 = 1500 + (4000 - 1500) / 4;
+int threshold2 = (1500 + (4000 - 1500) / 4) / 2;
 int rrAvg1 = 151;
 int rrAvg2 = 151;
 int rrMiss = 1.66 * 151;
