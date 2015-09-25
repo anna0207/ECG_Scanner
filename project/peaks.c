@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "peaks.h"
 
+int peaks[8] = {0};
 int spkf = 4000;
-int npkf = 2000;
-int threshold1 = 2000 + (4000 - 2000) / 4;
-int threshold2 = (2000 + (4000 - 2000) / 4) / 2;
+int npkf = 1500;
+int threshold1 = 300 + (4000 - 2000) *0.25;
+int threshold2 = (1500 + (4000 - 2000) / 4) *0.5;
 int rrAvg1 = 151;
 int rrAvg2 = 151;
 int rrMiss = 1.66 * 151;
@@ -13,38 +14,40 @@ int rrHigh = 1.16 * 151;
 int recentRR_OK[8] = { 0 };
 int recentRR[8] = { 0 };
 int peakCounter = 0;
+int rPeakCounter = 0;
 
-int findPeaks(int data[], int sample, int time[], int peaks[], int rPeaks[]) {
+int findPeaks(int data[], int sample, int time[], int rPeaks[]) {
 	int foundRPeak = -1;
 	int newData = sample % 3;
 	int mid = (newData - 1 + 3) % 3;
 	int first = (newData - 2 + 3) % 3;
 	if (data[mid] > data[first] && data[mid] > data[newData]) {
-		time[peakCounter % 8] = sample-1;
+		time[rPeakCounter % 8] = sample-2;
 		peaks[peakCounter % 8] = data[mid];
-		foundRPeak = threshold(time, peaks, rPeaks, peakCounter);
+		foundRPeak = findRPeaks(time, rPeaks);
 		if (foundRPeak != -1) {
-			peakCounter++;
+			rPeakCounter++;
 		}
+		peakCounter++;
 	}
 	return foundRPeak;
 }
 
-int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
+int findRPeaks(int time[], int rPeaks[]) {
 	int found = 0;
 	int warningCounter = 0;
 
 	if (peaks[peakCounter % 8] > threshold1) {
-		int rr = time[peakCounter % 8] - time[(peakCounter - 1 + 8) % 8];
+		int rr = time[rPeakCounter % 8] - time[(rPeakCounter - 1 + 8) % 8];
 		if (rr > rrLow && rr < rrHigh) {
-			rPeaks[peakCounter % 8] = peaks[peakCounter % 8];
+			rPeaks[rPeakCounter % 8] = peaks[peakCounter % 8];
 			found = 1;
 
 			spkf = 0.125 * peaks[peakCounter % 8] + 0.875 * spkf;
-			recentRR_OK[peakCounter % 8] = rr;
-			recentRR[peakCounter % 8] = rr;
+			recentRR_OK[rPeakCounter % 8] = rr;
+			recentRR[rPeakCounter % 8] = rr;
 
-			int n = peakCounter + 1;
+			int n = rPeakCounter + 1;
 			if (n > 8) {
 				n = 8;
 			}
@@ -74,18 +77,18 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 			if (rr > rrMiss) {
 				//Search backwards
 				int i = 0;
-				while (peaks[7 - i] <= threshold2 && i < 8) {
+				while (peaks[(peakCounter - i+8)%8] <= threshold2 && i < 8) {
 					i++;
 				}
 				if (i != 8) {
-					int rPeak = peaks[7 - i];
-					rPeaks[peakCounter % 8] = rPeak;
+					int rPeak = peaks[(peakCounter - i+8)%8];
+					rPeaks[rPeakCounter % 8] = rPeak;
 					found = 1;
 
 					spkf = 0.25 * rPeak + 0.75 * spkf;
-					recentRR[peakCounter % 8] = rr;
+					recentRR[rPeakCounter % 8] = rr;
 
-					int n = peakCounter + 1;
+					int n = rPeakCounter + 1;
 					if (n > 8) {
 						n = 8;
 					}
@@ -101,7 +104,6 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 					threshold1 = npkf + 0.25 * (spkf - npkf);
 					threshold2 = 0.5 * threshold1;
 				}
-				peakCounter++;
 			}
 		}
 	} else {
@@ -111,7 +113,7 @@ int threshold(int time[], int peaks[], int rPeaks[], int peakCounter) {
 	}
 
 	if (found == 1) {
-		return peakCounter;
+		return rPeakCounter;
 	} else {
 		return -1;
 	}

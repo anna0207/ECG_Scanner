@@ -12,7 +12,6 @@ int main(void) {
 	int squar[31] = {0};
 	int mwi[3] = {0};
 	int time[8] = {0};
-	int peaks[8] = {0};
 	int rPeaks[8] = {0};
 	int counter = 0;
 
@@ -23,14 +22,14 @@ int main(void) {
 		derivative(highPass, deriv, 5, 31, i);
 		squaring(deriv, squar, 31, 31, i);
 		movingWindow(squar, mwi, 31, 3, i);
-		if (i == 4092){
+		if (i == 2170){
 			printf("ln");
 		}
-		counter = findPeaks(mwi, i, time, peaks, rPeaks);
+		counter = findPeaks(mwi, i, time, rPeaks);
 		if(counter != -1){
 			printf("n = %d, %d, %d, %d, %d, %d, %d, %d, %d\n", i, rPeaks[0], rPeaks[1], rPeaks[2], rPeaks[3], rPeaks[4], rPeaks[5], rPeaks[6], rPeaks[7] );
 			printf("R peak-value: %d\nTime value: %d\nPulse: %d\n\n", rPeaks[counter%8], i/250, 60000/((time[counter%8]-time[(counter-1+8)%8])*1000/250));
-			if(rPeaks[counter]<2000) {
+			if(rPeaks[counter%8]<2000) {
 				printf("WARNING! low R-peak value\n");
 			}
 		}
