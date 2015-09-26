@@ -25,6 +25,5 @@ movingWindow(int x[], int y[], int inputSize, int outputSize, int n){
 		ytemp += x[(n-(N-i)+inputSize)%inputSize];
 	}
 	y[n%outputSize] = ytemp/N;
-
 }
 
