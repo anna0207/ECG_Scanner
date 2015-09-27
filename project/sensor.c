@@ -5,8 +5,8 @@
 int data[];
 
 int saveData(int counter) {
-	static const char filename[] = "ECG.txt";
-	static int data[10000];
+	static const char filename[] = "ECG10800K.txt";
+	static int data[10800000];
 	if (counter == 0) {
 		FILE *file = fopen(filename, "r");
 		int value;

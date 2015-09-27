@@ -15,7 +15,7 @@ int main(void) {
 	int rPeaks[8] = {0};
 	int counter = 0;
 
-	for(int i = 0; i<10000; i++){
+	for(int i = 0; i<10800000; i++){
 		data[i%13] = getNextData();
 		lowpass(data, lowPass, 13, 33, i);
 		highpass(lowPass, highPass, 33, 5, i);
