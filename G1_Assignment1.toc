@@ -1,0 +1,30 @@
+\select@language {danish}
+\contentsline {section}{\numberline {1}Introduktion}{3}
+\contentsline {section}{\numberline {2}Arbejdsmetode og samarbejde}{4}
+\contentsline {section}{\numberline {3}Analyse}{4}
+\contentsline {subsection}{\numberline {3.1}Problemstilling}{4}
+\contentsline {subsection}{\numberline {3.2}Funktioner}{5}
+\contentsline {subsubsection}{\numberline {3.2.1}Afgr\IeC {\ae }nsning}{5}
+\contentsline {subsubsection}{\numberline {3.2.2}Datastrukturer}{5}
+\contentsline {subsubsection}{\numberline {3.2.3}Samples og tidsm\IeC {\r a}ling}{6}
+\contentsline {subsubsection}{\numberline {3.2.4}Indl\IeC {\ae }sning af Data}{6}
+\contentsline {subsubsection}{\numberline {3.2.5}Filtre}{7}
+\contentsline {subsubsection}{\numberline {3.2.6}Peakdetektion}{7}
+\contentsline {subsubsection}{\numberline {3.2.7}Output}{7}
+\contentsline {subsubsection}{\numberline {3.2.8}Programanalyse og ydeevne}{7}
+\contentsline {section}{\numberline {4}Design}{7}
+\contentsline {subsection}{\numberline {4.1}Sensor}{7}
+\contentsline {subsection}{\numberline {4.2}Filtre}{8}
+\contentsline {subsection}{\numberline {4.3}Peaks}{8}
+\contentsline {section}{\numberline {5}Implementering}{9}
+\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{9}
+\contentsline {subsection}{\numberline {5.2}Filtrering}{9}
+\contentsline {subsection}{\numberline {5.3}Peak Detektion}{10}
+\contentsline {subsection}{\numberline {5.4}Output}{11}
+\contentsline {section}{\numberline {6}Resultater}{11}
+\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{11}
+\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{12}
+\contentsline {section}{\numberline {7}Diskussion}{12}
+\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{12}
+\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{12}
+\contentsline {section}{\numberline {8}Konklusion}{13}
