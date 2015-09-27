@@ -13,18 +13,20 @@
 \contentsline {subsubsection}{\numberline {3.2.7}Output}{7}
 \contentsline {subsubsection}{\numberline {3.2.8}Programanalyse og ydeevne}{7}
 \contentsline {section}{\numberline {4}Design}{7}
-\contentsline {subsection}{\numberline {4.1}Sensor}{7}
+\contentsline {subsection}{\numberline {4.1}Sensor}{8}
 \contentsline {subsection}{\numberline {4.2}Filtre}{8}
-\contentsline {subsection}{\numberline {4.3}Peaks}{8}
-\contentsline {section}{\numberline {5}Implementering}{9}
-\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{9}
-\contentsline {subsection}{\numberline {5.2}Filtrering}{9}
-\contentsline {subsection}{\numberline {5.3}Peak Detektion}{10}
-\contentsline {subsection}{\numberline {5.4}Output}{11}
-\contentsline {section}{\numberline {6}Resultater}{11}
-\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{11}
-\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{12}
-\contentsline {section}{\numberline {7}Diskussion}{12}
-\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{12}
-\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{12}
-\contentsline {section}{\numberline {8}Konklusion}{13}
+\contentsline {subsection}{\numberline {4.3}Peaks}{9}
+\contentsline {section}{\numberline {5}Implementering}{10}
+\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{10}
+\contentsline {subsection}{\numberline {5.2}Filtrering}{10}
+\contentsline {subsection}{\numberline {5.3}Peak Detektion}{11}
+\contentsline {subsection}{\numberline {5.4}Output}{12}
+\contentsline {section}{\numberline {6}Resultater}{12}
+\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{12}
+\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{13}
+\contentsline {section}{\numberline {7}Diskussion}{13}
+\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{13}
+\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{13}
+\contentsline {section}{\numberline {8}Konklusion}{15}
+\contentsline {section}{\numberline {9}Litteraturliste}{16}
+\contentsline {section}{\numberline {10}Bilag}{17}

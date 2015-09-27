@@ -17,6 +17,7 @@
 \newpage
 
 \section*{Abstract}
+An ECG shows the electrical activity of the heart. 
 
 \tableofcontents
 
@@ -51,7 +52,7 @@ For at løse ovenstående problemstilling, skal der laves et program. Kravene ti
 \subsubsection{Afgrænsning}
 I den virkelige verden, ville programmet skulle indlæse data fra ECG Scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. Dog skal programmet ikke indlæse flere datasamples ad gangen, men skal indlæse og behandle et element ad gangen, inden ny data indlæses.
 
-Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt 
+Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt vil det dog blot være et krav, at det vises på et display, hvis der er problemer.
 
 \subsubsection{Datastrukturer}
 En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG Scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
@@ -69,7 +70,15 @@ Vi har vurderet at et begrænset array er mest ideelt at bruge i denne situation
 \subsubsection{Samples og tidsmåling}
 Inputtet, som softwaren modtager fra ECG Scanneren, består af individuelle målinger (samples) for den målte elektriske aktivitet (styrke) af hjertet [ECG]. ECG Scanneren giver 250 samples som output per sekund. Altså er frekvensen:
 
+\begin{equation} 
+\frac{1s}{250} = 0,004s
+\end{equation}
+
 Hver gang en sample indlæses, forøges en optællings-integer med én. På denne måde kan en sample betragtes som et punkt med en bestemt styrke til en given tid. Idet integers ikke kan indeholde uendeligt store tal, vil denne optæller på et tidspunkt gå i overløb. Det antages at den anvendte chip kan anvende 32-bit integers. Heraf vil der gå så meget tid inden variablen vil have overløb, hvis det antages, at det er en unsigned int:
+
+\begin{equation}
+\frac{2^{32}}{250} = 17.179.869 sekunder \approx 200 dage
+\end{equation}
 
 Det vurderes, at 200 dage er en tilstrækkelig levetid for programmet, idet det antages at programmet enten genstartes, når batteriet skal oplades/udskiftes, eller ved hvert lægecheck. Alternativt kunne man sætte værdien til 0, inden overløbet finder sted.
 
@@ -77,7 +86,7 @@ Det vurderes, at 200 dage er en tilstrækkelig levetid for programmet, idet det 
 Det er et krav, at man kun får en sample at arbejde med ad gangen, da det er sådan det kommer til at foregå på en rigtig patient. Der er givet en tekstfil med alle målingerne, men der skal altså kun indlæses én måling ad gangen. Hver gang en måling indlæses, indlæses værdien på linjen i tekstfilen, som patienten er nået til. For at læse en bestemt linje er scanneren, som indlæser værdier fra filen, nødt til at læse alle linjerne ned til den ønskede linje. Da dette tager længere tid jo flere målinger der har været, indlæses alle værdierne i stedet med det samme og gemmes i censoren. Hver gang funktionen getNextData kaldes fra main-funktionen, returneres dog kun én værdi og det virker derfor stadig som om at censoren kun har indlæst en enkelt ny værdi som returneres til main-funktionen, der derefter kan sende værdien til filtrering.
 
 \subsubsection{Filtre}
-Dataen behandles via filtre. Low og high-pass filtre fjerner støj i områder i dataen som på baggrund af frekvens eller amplitude adskiller sig fra, hvordan hjerteslag normalt ser ud i dataen. Andre filtre gør det nemmere for programmet at identificere hjerteslagene ved at forstærke og udglatte dataen. Filtrenes formler er givet på forhånd i deres rene (ikkeimplementerede) form, og formlerne udledes eller forklares ikke i denne rapport.
+Dataen behandles via filtre. Low og high-pass filtre fjerner støj i områder i dataen som på baggrund af frekvens eller amplitude adskiller sig fra, hvordan hjerteslag normalt ser ud i dataen. Andre filtre gør det nemmere for programmet at identificere hjerteslagene ved at forstærke og udglatte dataen. Filtrenes formler er givet på forhånd i deres rene (ikkeimplementerede) form, og formlerne udledes eller forklares ikke i denne rapport. En gennemgang af alle filtrene med grafiske fremstillinger kan ses i bilaget.
 
 \subsubsection{Peakdetektion}
 Efter filtreringen detekteres højdepunkterne (peaks) i dataen, hvormed programmet vurderer om højdepunkterne kan betragtes som hjerteslag eller ej. Et forslag til en måde at gøre dette på er givet på forhånd i form at et flowchart. Flowchartet giver også et forslag til, hvordan programmet kan afgøre, om der er problemer med hjerterytmen eller om der er hjertestop. Disse forslag anvendes i vores program.
@@ -99,32 +108,42 @@ Filter.c består af 5 lag filtre, Low-pass, High-pass, Derivative, Squaring og M
 I hver af formlerne beskriver x inputtet i den aktuelle funktion, og y beskriver den resulterende værdi, efter det bestemte sample er kørt igennem filteret.
 
 Low-pass filteret:
+$$y_n=2y_{n-1}-y_{n-2}+\frac{1}{32}\cdot(x_n-2x_{n-6}+x_{n-12})$$
  
 Low-pass filteret filtrerer alle frekvenser over 12 Hz fra og lader kun de lave frekvenser komme igennem.
 
 High-pass filteret:
+$$y_n=y_{n-1}-\frac{x_n}{32}+x_{n-16}-x_{n-17}+\frac{x_{n-32}}{32}$$
 
 High-pass filteret filtrerer alle frekvenser under 6 Hz fra og lader kun de høje frekvenser passere. På denne måde har vi kun målinger mellem 6 og 12 Hz tilbage, som bliver sendt videre til derivative filteret.
 
 Derivative filteret:
+$$y_n=\frac{1}{8}\cdot(2x_n+x_{n-1}-x_{n-3}-2x_{n-4})$$
 
 Derivative filteret forstærker signalerne, så det er nemmere at detektere peaks senere hen. Desuden flytter den hele grafen til at ligge ved y = 0, når der ikke er detekteret nogle udslag.
 
 Squaring filteret:
+$$y_n=x_n^2$$
+
 Squaring filteret kvadrerer inputtet, af den grund at små forskelle bliver større og nemmere at se, og alle signaler bliver positive. Det gør det også nemmere at detektere peaks senere, så man ikke skal tage højde for negative peaks.
 
 Moving Window Integration filteret:
+$$y_n=\frac{1}{N}\cdot(x_{n-(N-1)}+x_{n-(N-2)}+...+x_n)$$
 
 Moving Window Integration filteret gør signalet mere jævn. Det er en fordel, da man bedre kan se, hvordan hjerterytmen slår og bevæger sig. Det er angivet at N har værdi 30.
 
 \subsection{Peaks}
-Den generelle tanke ved at detektere peaks er, at man finder et toppunkt: Dette gør så at vi ikke detektere “bløde” peaks, hvor følgende ville gælde:
+Den generelle tanke ved at detektere peaks er, at man finder et toppunkt: $x_{n-1} < x_n > x_{n+1}$. Dette gør så at vi ikke detektere “bløde” peaks, hvor følgende ville gælde: $x_{n-1} \leq x_n \leq x_{n-1}$.
 
 For at detektere peaks har vi brugt QRS-algoritmen, som ses som flowchart nedenfor:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{QRS-diagram.png}
+	\caption{Flowchart for QRS-algoritmen}
+\end{figure}
 
-Man finder først en peak, hvor det gælder at Derefter tjekker vi om peaket er større end threshold 1, som er en threshold der adskiller noise fra peaks. Hvis peak’en ikke er større end threshold 1, må det ikke være en R-peak med bare noget støj. Derfor bliver NPKF reguleret, da den holder støj-værdien. Efterfølgende bliver både threshold 1 og 2 reguleret ud fra NPKF. Hvis det detekteret peak er større end threshold 1 må det være en R-peak. Vi udregner afstanden fra denne R-peak til den forrige R-peak, og tjekker om den ligger inden for intervallet mellem og . Hvis dette er tilfældet er det en normal R-peak, og alle variable bliver reguleret efter denne R-peak. Hvis R-peaken ikke ligger inden for intervallet, tjekker vi om dens interval er større end , der så kan indikere om der måske er hjertestop. Hvis intervallet for R-peaken ikke er større end bliver den bare ikke brugt til noget, og algoritmen går i gang med næste detekteret peak. Hvis den interval derimod er større end, så søger den igennem de seneste peaks, og tjekker om en af dem er større end threshold 2, og hvis den er bliver den peak kategoriseret som en unormal R-peak. På den måde kan vi både detektere hjertestop og uregelmæssigheder i ens hjerterytme. 
-Der udstedes en advarsel til brugeren, hvis 5 R-peaks i træk overstiger, og hvis der detekteres en peak med en værdi mindre end 2000.
-
+Man finder først en peak, hvor det gælder at $x_{n-1} < x_n > x_{n+1}$. Derefter tjekker vi om peaket er større end threshold 1, som er en threshold der adskiller noise fra peaks. Hvis peak’en ikke er større end threshold 1, må det ikke være en R-peak med bare noget støj. Derfor bliver NPKF reguleret, da den holder støj-værdien. Efterfølgende bliver både threshold 1 og 2 reguleret ud fra NPKF. Hvis det detekteret peak er større end threshold 1 må det være en R-peak. Vi udregner afstanden fra denne R-peak til den forrige R-peak, og tjekker om den ligger inden for intervallet mellem $RR_{LOW}$ og $RR_{HIGH}$. Hvis dette er tilfældet er det en normal R-peak, og alle variable bliver reguleret efter denne R-peak. Hvis R-peaken ikke ligger inden for intervallet, tjekker vi om dens interval er større end $RR_{MISS}$, der så kan indikere om der måske er hjertestop. Hvis intervallet for R-peaken ikke er større end $RR_{MISS}$ bliver den bare ikke brugt til noget, og algoritmen går i gang med næste detekteret peak. Hvis den interval derimod er større end $RR_{MISS}$, så søger den igennem de seneste peaks, og tjekker om en af dem er større end threshold 2, og hvis den er bliver den peak kategoriseret som en unormal R-peak. På den måde kan vi både detektere hjertestop og uregelmæssigheder i ens hjerterytme. 
+Der udstedes en advarsel til brugeren, hvis 5 R-peaks i træk overstiger $RR_{MISS}$, og hvis der detekteres en peak med en værdi mindre end 2000.
 
 \section{Implementering}
 
@@ -155,59 +174,108 @@ Vi har lavet en gprof-profilering af vores færdige system, hvor det store datas
 Nedenfor ses en tabel med tidsfordelingen af de fire c-filer, og hver af deres funktioner.
 På grund af computerens flere processorer, som alle bruger CPU’en, kører samtidigt, gør dette at resurserne til programmet varierer, og derved varierer profileringen også. Derfor har vi lavet 4 sæt profileringer, og tabellen nedenfor er gennemsnittet af de 4 sæt profileringer.
 
-Tidsfordeling for c-filer
-Main.c
-0,070 s
-Sensor.c
-0,095 s
-Filter.c
-2,248 s
-Peaks.c
-0,070 s
+\begin{table}[h]
+	\centering
+	\caption{Tidsfordeling for c-filer}
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	Main.c & Sensor.c & Filter.c & Peaks.c \\ \hline
+	0,070 s & 0,095 s & 2,248 s & 0,070 s \\ \hline
+	\end{tabular}
+\end{table}
 
-Tidsfordeling for Filter-funktioner
-lowPass
-0,158 s
-highPass
-0,253 s
-derivative
-0,145 s
-squaring
-0,443 s
-movingWindow
-1,588 s
+\begin{table}[h]
+	\centering
+	\caption{Tidsfordeling i Filter.c}
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	lowPass & highPass & derivaive & squaring & movingWindow \\ \hline
+	0,158 s & 0,253 s & 0,145 s & 0,443 s & 1,588 s \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h]
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Tidsfordeling i Sensor.c}
+		\begin{tabular}{|c|c|}
+		\hline
+		getNextData & saveData\\ \hline
+		0,028 s & 0,068 s \\ \hline
+		\end{tabular}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\centering
+		\caption{Tidsfordeling i Peaks.c}
+		\begin{tabular}{|c|c|}
+		\hline
+		findPeaks & findRPeaks \\ \hline
+		0,068 s & 0,003 s \\ \hline
+		\end{tabular}
+	\end{minipage}
+\end{table}
 
-Tidsfordeling for Sensor-funktioner
-getNextData
-0,028 s
-saveData
-0,068 s
+I \textbf{\textit{Bilag 1}} ses der på diagrammet en tidsfordeling af alle vores c-filer. Det ses, at Filter.c bruger 90\% af CPU-tiden, når programmet bliver kørt. 
 
-Tidsfordeling for Peaks-funktioner
-findPeaks
-0,068 s
-findRPeaks
-0,003 s
-
-Total Time:
-2,490 s
-
-Der ses på diagrammet nedenfor en tidsfordeling af alle vores c-filer. Det ses, at Filter.c bruger 90% af CPU-tiden, når programmet bliver kørt. 
-
-Da Filter.c bruger størstedelen af CPU-tiden, er det ret relevant at kigge på dens funktioner. Det ses, at Moving Window Integration-funktionen bruger 61 % af CPU-tiden for Filter.c. Hvis man skulle få programmet til at køre hurtigere, ville det nok være smart at effektivisere Moving Window Integration, da den bruger så stor en procentdel af tiden. Dette bliver diskuteret nærmere under diskussionsafsnittet.
+Da Filter.c bruger størstedelen af CPU-tiden, er det ret relevant at kigge på dens funktioner. I \textbf{\textit{Bilag 2}} ses det, at Moving Window Integration-funktionen bruger 61 \% af CPU-tiden for Filter.c. Hvis man skulle få programmet til at køre hurtigere, ville det nok være smart at effektivisere Moving Window Integration, da den bruger så stor en procentdel af tiden. Dette bliver diskuteret nærmere under diskussionsafsnittet.
 
 \subsection{Filtrerede R-peaks}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\linewidth}
+		\includegraphics[scale=0.4]{Filter0.png}	
+		\caption{Datasæt før filtrering}
+	\end{minipage}%
+	\begin{minipage}{.5\linewidth}
+		\includegraphics[scale=0.4]{Filter5Peaks.png}	
+		\caption{Datasæt efter filtrering}
+	\end{minipage}
+\end{figure}
+
 
 \section{Diskussion}
 
 \subsection{Detekterede R-peaks og advarsler}
+(Der kommer aldrig advarsler, nogle R-Peaks detekterer vi ikke)
 
 \subsection{Effektivisering af kode}
 Under resultatafsnittet sås det, at Moving Window Integration-funktionen brugte størstedelen af CPU-tiden, og det derfor kunne være ret relevant at effektivisere den. 
 Det er muligt helt at undgå den for-løkke, der kører 30 gange i movingWindow. Hvis man i stedet for at skulle addere de seneste 30 x-værdier hver gang movingWindow bliver kaldt, kunne man bare gemme summen til næste sample, og bare subtraktere den ældste sample fra summen og addere den nyeste sample til summen. Dette kører i konstant tid frem for lineær tid, og hvis vi havde tid til at gøre dette i vores program, vil vi forvente en markant ændring i CPU-tiden.
 
+\begin{equation}
+sum = x_1+x_2+...+x_{30}
+\end{equation}
+
+\begin{equation}
+sum = sum-x_1+x_{31}
+\end{equation}
+
+Det er ret positivt, at det er vores filtre, der bruger al CPU-tiden. Det betyder, at alt andet kodemæssigt kører forholdsvist hurtigt. Filtrene er implementeret næste direkte efter de angivne formler, så udover Moving Window Integration, er det svært at gøre dem bedre. Derved vurderer vi, at vores kode køre hurtigt og effektivt.
+
+
 \newpage
 \section{Konklusion}
-Det kan konkluderes, at det er lykkedes at fremstille et program, der indlæser simuleret data fra en tekstfil, filtrerer det og deraf bl.a. fjerner støj fra det og finder toppunkter i dataen, hvorefter det vurderes om der er tale om et hjerteslag. Dertil vurderer programmet, om hjerterytmen er ustabil, og viser data til brugeren 
+Det kan konkluderes, at det er lykkedes at fremstille et program, der indlæser simuleret data fra en tekstfil, filtrerer det og deraf bl.a. fjerner støj fra det og finder toppunkter i dataen, hvorefter det vurderes om der er tale om et hjerteslag. Dertil vurderer programmet, om hjerterytmen er ustabil, og viser relevant data samt alarmbeskeder til brugeren. Udfra profileringen kan det konkluderes, at programmet virker, og at det kører forholdsvis hurtigt.
+
+\newpage
+\section{Litteraturliste}
+[ECG] http://medical-dictionary.thefreedictionary.com/ECG - 26-09-2015
+
+\newpage
+\section{Bilag}
+\subsection*{Bilag 1}
+\includegraphics[scale=0.47]{c-filer.png}
+\subsection*{Bilag 2}
+\includegraphics[scale=0.49]{filter-funktioner.png}
+\subsection*{Bilag 3}
+\includegraphics[scale=0.6]{Filter1.png}
+\subsection*{Bilag 4}
+\includegraphics[scale=0.6]{Filter2.png}
+\subsection*{Bilag 5}
+\includegraphics[scale=0.6]{Filter3.png}
+\subsection*{Bilag 6}
+\includegraphics[scale=0.6]{Filter4.png}
+\subsection*{Bilag 7}
+\includegraphics[scale=0.6]{Filter5close2.png}
+
 
 \end{document}
