@@ -23,7 +23,7 @@ An electrocardiography (ECG) shows the electrical activity of the heart and ther
 
 \newpage
 \section{Introduktion}
-Følgende rapport omhandler en ud af tre projekter i kurset, \textit{02131 indlejrede systemer}. Projektet drejer sig om uviklingen af en ECG-scanner, der måler en simuleret hjerterytme. Scanneren filtrerer målingerne, analyserer dem og kan derudfra informere en patient om bl.a. patientens puls. I forbindelse med forløbet, er vi blevet undervist i C, som vi har anvendt til at skrive et program, der kommer til at fungere som en ECG-scanner. De overordnede krav til programmets funktionalitet er givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
+Følgende rapport omhandler et ud af tre projekter i kurset, \textit{02131 indlejrede systemer}. Projektet drejer sig om uviklingen af en ECG-scanner, der måler en simuleret hjerterytme. Scanneren filtrerer målingerne, analyserer dem og kan derudfra informere en patient om bl.a. patientens puls. I forbindelse med forløbet, er vi blevet undervist i C, som vi har anvendt til at skrive et program, der kommer til at fungere som en ECG-scanner. De overordnede krav til programmets funktionalitet er givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
 
 
 \newpage
@@ -52,7 +52,7 @@ I den virkelige verden, ville programmet skulle indlæse data fra ECG-scanneren 
 Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren alarmeres, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til patienten. I dette projekt er det dog blot et krav, at det vises på et display, hvis der er hjerteproblemer.
 
 \subsection{Datastrukturer}
-En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG Scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
+En ECG-scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG-scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
 
 Først skulle vi finde den ideelle datastruktur at gemme de enkelte samples ned i. Vi overvejede: en kø, et dynamisk array, en hægtet liste og et begrænset array.
 
@@ -92,6 +92,12 @@ Efter filtreringen detekteres højdepunkterne (peaks) i dataen, hvormed programm
 Når en R-Peak er detekteret, skal patienten kunne se det med det samme, med oplysning om intensiteten af den fundne R-Peak og på hvilket tidspunkt den blev detekteret. Derudover skal patienten også kunne se hvor lang tid der er gået fra den sidst-detekterede R-Peak - RR-intervallet. Patienten skal også kunne se sin puls og advares hvis en R-Peak har en intensitet på under 2000 eller hvis der i træk har været fem RR-intervaller, som ikke har ligget inden for et bestemt interval.
 
 \section{Design}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{diagram.png}
+	\caption{Flowchart for QRS-algoritmen}
+\end{figure}
+
 Vores program består af en main.c og tre andre c-filer, Peaks.c, Filter.c og Sensor.c, som main.c har adgang til via deres header-filer. 
 
 \subsection{Sensor}

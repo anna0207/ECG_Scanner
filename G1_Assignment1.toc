@@ -24,7 +24,7 @@
 \contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{14}
 \contentsline {section}{\numberline {7}Diskussion}{14}
 \contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{14}
-\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{14}
+\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{15}
 \contentsline {section}{\numberline {8}Konklusion}{16}
 \contentsline {section}{\numberline {9}Litteraturliste}{17}
 \contentsline {section}{\numberline {10}Bilag}{18}
