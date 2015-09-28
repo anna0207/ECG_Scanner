@@ -17,13 +17,13 @@
 \newpage
 
 \section*{Abstract}
-An electrocardiography (ECG) shows the electrical activity of the heart and therefore makes it possible to detect QRS complexes, which shows the depolarization of the ventricles in the heart\cite{3}. This paper examines the QRS complexes from an ECG device. This is done by creating a virtual personal ECG scanner coded in C and based on a real-time QRS algorithm, which will filter raw data fetched from a patient, and detect the R-Peaks from the QRS complexes\cite{1}. Since this is not a real scanner, the raw data is read from a text file, but the processing of it is based on real ECG devices.
+An ECG shows the electrical activity of the heart. 
 
 \tableofcontents
 
 \newpage
 \section{Introduktion}
-Vi er tre bachelorstuderende fra softwareteknologi på DTU på tredje semester, der i vores første ud af tre projekter i kurset, \textit{02131 indlejrede systemer}, har arbejdet med data fra en ECG-Scanner i form af en simuleret hjerterytme. I forbindelse med forløbet, er vi blevet undervist i C, som vi derudfra har anvendt til at skrive et program, der behandler denne data. De overordnede krav til programmets funktionalitet blev givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
+Vi er tre bachelorstuderende fra softwareteknologi på DTU på tredje semester, der i vores første ud af tre projekter i kurset, 02131 indlejrede systemer, har arbejdet med data fra en ECG Scanner i form af en simuleret hjerterytme. I forbindelse med forløbet, er vi blevet undervist i c, som vi derudfra har anvendt til at skrive et program, der behandler denne data. De overordnede krav til programmets funktionalitet blev givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
 
 
 \newpage
@@ -52,17 +52,15 @@ I den virkelige verden, ville programmet skulle indlæse data fra ECG Scanneren 
 Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt vil det dog blot være et krav, at det vises på et display, hvis der er problemer.
 
 \subsection{Datastrukturer}
-En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG Scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
+En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Det er derfor essentielt, hvordan vi opbevarer data fra sensoren. Vi kan forvente 250 samples pr sekund, derfor skal datastrukturen være både hurtig og bruge mindst plads muligt.
 
-Først skulle vi finde den ideelle datastruktur at gemme de enkelte samples ned i. Vi overvejede: en kø, et dynamisk array, en hægtet liste og et begrænset array.
 
-Fordelene ved at benytte en kø, er at det ville være nemt og hurtigt at tilgå den første og den sidste værdi i køen. Normalt er en kø en liste, som bruger ubegrænset plads, men det ville være muligt at implementere den i et begrænset array som en torus. Altså når køen når til den sidste plads i arrayet, hopper den frem til den forreste plads i arrayet og fortsætter derfra. For at det skulle virke, skulle vi fjerne elementer i takt med at der blev indsat elementer, så man kun holdt på de seneste samples. Desværre kan man ikke læse andre samples i arrayet udover den senest og den tidligst indsatte. For at kunne få en bestemt sample, ville man skulle fjerne andre samples indtil den bestemte sample lå som den tidligste, og det ville ikke være optimalt, da nogle af vores funktioner kræver man kan få fat i bestemte samples uden at skulle fjerne andre samples.
+Vi valgte at implementere vores data som et array med en bestemt størrelse, fordi det er hurtigt at tilgå data i et array, og det har en begrænset størrelse modsat lister som dynamisk array og hægtet liste. Problemet med et begrænset array er, at man ikke kan holde så meget historik ad gangen. Da vi fandt ud af, at historikken var irrelevant udover de værdier filterformlerne benytter, forkortede vi arrayet ned til minimal størrelse.
+Arrayet er implementeret som en torus, så når arrayet er fyldt, bliver de ældste data overskrevet med de nye data. Til dette bruger vi modulo, så data ikke bliver indsat uden for arrayet. 
+Der blev stadig holdt en samplecounter til hver værdi, der ikke blev nulstillet, som kan bruges til senere beregninger.
 
-Et andet alternativ er at bruge et dynamisk array, der også fungerer som en liste. Et dynamisk array laver et array af en bestemt længde, og når man har fyldt det ud, opretter den et nyt array der er dobbelt så stort, flytter alle elementer over i det nye array og sletter det gamle array. Derved bruger et dynamisk array ubegrænset plads og bruger forholdsvis lang tid på at oprette nye arrays og flytte alle elementer. En løsning på det, ville være at man efter noget tid nulstillede det dynamiske array, så det ikke brugte for meget plads, men så ville man skulle smide alle samples ud og starte forfra. Man kunne også slette gamle samples, når man indsatte nye samples, og derved holde konstant plads, men så kunne man ligeså godt bare bruge en begrænset array.
-Et tredje alternativ ville være at bruge en hægtet liste, da det er nemt at indsætte og slette fra den uden at skulle rykke alle samples. F.eks. hvis man sletter en sample midt i den hægtede liste, så ville det dynamiske array bruge tid på at flytte alle de andre samples frem, så der ikke var “huller” midt i listen. Desværre tager det rigtig lang tid at søge en hægtet liste igennem for et bestemt element. En ide var, at sætte pointers på alle elementerne, så man hurtigt kunne få værdierne uden at skulle lede listen igennem, og hver gang et element blev slettet eller indsat bliver alle pointers rykket. Det ville så bare gøre, at listen skulle være begrænset i plads, så man ikke oprettede alt for mange pointers. Igen ville dette kunne løses på samme måde med et begrænset array.
-
-Det sidste alternativ, som også er den løsning vi har valgt at arbejde videre med, er et begrænset array. Man kan hurtigt få adgang til alle værdier, og det er hurtigt at indsætte og slette. Desværre kan man kun holde en bestemt mængde data, så man ikke kan gå tilbage og se data fra langt tilbage. Dette er en mindre detalje, da vi kun skal bruge få data at beregne filtre med, og derved ikke har brug for en lang historik af samples. 
-Vi har vurderet at et begrænset array er mest ideelt at bruge i denne situation, da det er hurtigt og ikke fylder så meget.
+Ideen til denne datastruktur fik vi fra tidligere overvejelser om at bruge en kø som datastruktur i stedet. Den har samme princip med at fjerne de ældste data og indsætte ny data. Hvis man implementerede køen som et array, der også fungerede som torus, ville det næsten blive samme løsning, som vi har brugt, bortset fra i en kø, har man kun adgang til den seneste og tidligste værdi, ellers skal man oprette pointers til bestemte værdier. Det så vi som unødvendigt, da man ligeså godt kunne bruge et almindeligt array. Man kunne også implementere køen som en hægtet liste, da det tager meget kort tid at indsætte og slette i en hægtet liste, og man behøver ikke holde pointers. Den hægtet liste vil bare fjerne den bagerste værdi og indsætte den nye værdi forrest, så den hægtede liste vil bevæge sig fremad men med konstant plads. Desværre er det meget tidskrævende at hente andre værdier end den forreste og bagerste. Man kunne godt oprette mange pointers til de steder man ville have, men igen vil det være nemmere at bruge et almindeligt array.
+Vi var også omkring dynamiske arrays, men da den opretter nye arrays og flytter alle elementer hver gang arrayet er fyldt, er det både en tidskrævende og pladskrævenede måde at implemetere på.
 
 \subsection{Samples og tidsmåling}
 Inputtet, som softwaren modtager fra ECG Scanneren, består af individuelle målinger (samples) for den målte elektriske aktivitet (styrke) af hjertet [ECG]. ECG Scanneren giver 250 samples som output per sekund. Altså er frekvensen:
@@ -133,7 +131,7 @@ Den generelle tanke ved at detektere peaks er, at man finder et toppunkt: $x_{n-
 For at detektere peaks har vi brugt QRS-algoritmen, som ses som flowchart nedenfor:
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=0.5]{QRS-diagram.png}
+	\includegraphics[scale=0.45]{QRS-diagram.png}
 	\caption{Flowchart for QRS-algoritmen}
 \end{figure}
 
@@ -253,12 +251,7 @@ Det kan konkluderes, at det er lykkedes at fremstille et program, der indlæser 
 
 \newpage
 \section{Litteraturliste}
-\begin{thebibliography}{}
-\bibitem{1}Pan, Jiapu; Tompkins, Willis J.: \textit{'A Real-Time QRS Algorithm'}, 1985
-\bibitem{2}Pop, Paul; Frederiksen, Karsten J.; Boesen, Michael R.; Kaminskas, Linas: \textit{'02131 Assignment 1: Software implementation of a personal ECG scanner'}, 2015
-\bibitem{3}ECG $http://medical-dictionary.thefreedictionary.com/ECG$ - besøgt: 26-09-2015
-\bibitem{4}[QRS Complex] $https://en.wikipedia.org/wiki/QRS_complex$ - besøgt: 28-09-2015
-\end{thebibliography}
+[ECG] http://medical-dictionary.thefreedictionary.com/ECG - 26-09-2015
 
 \newpage
 \section{Bilag}

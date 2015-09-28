@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.3)  28 SEP 2015 20:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.10.3)  28 SEP 2015 22:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -451,79 +451,81 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout3 = `G1_Assignment1.toc'.
 
  [2] [3] [4] [5] [6] [7]
-<QRS-diagram.png, id=33, 692.5875pt x 504.88625pt>
+<QRS-diagram.png, id=35, 692.5875pt x 504.88625pt>
 File: QRS-diagram.png Graphic file (type png)
  <use QRS-diagram.png>
-Package pdftex.def Info: QRS-diagram.png used on input line 136.
-(pdftex.def)             Requested size: 346.2929pt x 252.44249pt.
+Package pdftex.def Info: QRS-diagram.png used on input line 134.
+(pdftex.def)             Requested size: 311.66148pt x 227.1967pt.
 
-Overfull \hbox (1.2929pt too wide) in paragraph at lines 136--137
- [][] 
- []
 
-[8] [9 <./QRS-diagram.png>] [10] [11] [12]
-<Filter0.png, id=54, 401.5pt x 401.5pt>
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8] [9 <./QRS-diagram.png>] [10] [11] <Filter0.png, id=50, 401.5pt x 401.5pt>
 File: Filter0.png Graphic file (type png)
- <use Filter0.png>
-Package pdftex.def Info: Filter0.png used on input line 220.
-(pdftex.def)             Requested size: 160.59715pt x 160.59715pt.
 
-<Filter5Peaks.png, id=55, 401.5pt x 401.5pt>
+<use Filter0.png>
+Package pdftex.def Info: Filter0.png used on input line 218.
+(pdftex.def)             Requested size: 160.59715pt x 160.59715pt.
+ <Filter5Peaks.png, id=51, 401.5pt x 401.5pt>
 File: Filter5Peaks.png Graphic file (type png)
- <use Filter5Peaks.png>
-Package pdftex.def Info: Filter5Peaks.png used on input line 224.
-(pdftex.def)             Requested size: 160.59715pt x 160.59715pt.
- [13 <./Filter0.png (PNG copy)> <./Filter5Peaks.png (PNG copy)>] [14] [15] [16]
 
-<c-filer.png, id=69, 636.3775pt x 499.8675pt>
+<use Filter5Peaks.png>
+Package pdftex.def Info: Filter5Peaks.png used on input line 222.
+(pdftex.def)             Requested size: 160.59715pt x 160.59715pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[12] [13 <./Filter0.png (PNG copy)> <./Filter5Peaks.png (PNG copy)>] [14]
+[15] <c-filer.png, id=66, 636.3775pt x 499.8675pt>
 File: c-filer.png Graphic file (type png)
  <use c-filer.png>
-Package pdftex.def Info: c-filer.png used on input line 261.
+Package pdftex.def Info: c-filer.png used on input line 259.
 (pdftex.def)             Requested size: 299.09746pt x 234.93774pt.
 
-<filter-funktioner.png, id=70, 616.3025pt x 464.73625pt>
+<filter-funktioner.png, id=67, 616.3025pt x 464.73625pt>
 File: filter-funktioner.png Graphic file (type png)
 
 <use filter-funktioner.png>
-Package pdftex.def Info: filter-funktioner.png used on input line 263.
+Package pdftex.def Info: filter-funktioner.png used on input line 261.
 (pdftex.def)             Requested size: 301.99086pt x 227.72275pt.
- <Filter1.png, id=71, 401.5pt x 401.5pt>
+ <Filter1.png, id=68, 401.5pt x 401.5pt>
 File: Filter1.png Graphic file (type png)
 
 <use Filter1.png>
-Package pdftex.def Info: Filter1.png used on input line 265.
+Package pdftex.def Info: Filter1.png used on input line 263.
 (pdftex.def)             Requested size: 240.90184pt x 240.90184pt.
- [17 <./c-filer.png> <./filter-funktioner.png>]
-<Filter2.png, id=77, 401.5pt x 401.5pt>
+ [16 <./c-filer.png> <./filter-funktioner.png>]
+<Filter2.png, id=74, 401.5pt x 401.5pt>
 File: Filter2.png Graphic file (type png)
  <use Filter2.png>
-Package pdftex.def Info: Filter2.png used on input line 267.
+Package pdftex.def Info: Filter2.png used on input line 265.
 (pdftex.def)             Requested size: 240.90184pt x 240.90184pt.
 
-<Filter3.png, id=78, 401.5pt x 401.5pt>
+<Filter3.png, id=75, 401.5pt x 401.5pt>
 File: Filter3.png Graphic file (type png)
  <use Filter3.png>
-Package pdftex.def Info: Filter3.png used on input line 269.
+Package pdftex.def Info: Filter3.png used on input line 267.
 (pdftex.def)             Requested size: 240.90184pt x 240.90184pt.
- [18 <./Filter1.png (PNG copy)> <./Filter2.png (PNG copy)>] <Filter4.png, id=82
+ [17 <./Filter1.png (PNG copy)> <./Filter2.png (PNG copy)>] <Filter4.png, id=79
 , 401.5pt x 401.5pt>
 File: Filter4.png Graphic file (type png)
 
 <use Filter4.png>
-Package pdftex.def Info: Filter4.png used on input line 271.
+Package pdftex.def Info: Filter4.png used on input line 269.
 (pdftex.def)             Requested size: 240.90184pt x 240.90184pt.
- <Filter5close2.png, id=83, 401.5pt x 401.5pt>
+ <Filter5close2.png, id=80, 401.5pt x 401.5pt>
 File: Filter5close2.png Graphic file (type png)
 
 <use Filter5close2.png>
-Package pdftex.def Info: Filter5close2.png used on input line 273.
+Package pdftex.def Info: Filter5close2.png used on input line 271.
 (pdftex.def)             Requested size: 240.90184pt x 240.90184pt.
- [19 <./Filter3.png (PNG copy)> <./Filter4.png (PNG copy)>] [20 <./Filter5close
+ [18 <./Filter3.png (PNG copy)> <./Filter4.png (PNG copy)>] [19 <./Filter5close
 2.png (PNG copy)>] (./G1_Assignment1.aux) ) 
 Here is how much of TeX's memory you used:
  3175 strings out of 493117
  42929 string characters out of 6135433
- 125715 words of memory out of 5000000
+ 123715 words of memory out of 5000000
  6558 multiletter control sequences out of 15000+600000
  8851 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -540,10 +542,10 @@ pe1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmsy7.pfb>
-Output written on G1_Assignment1.pdf (20 pages, 443754 bytes).
+Output written on G1_Assignment1.pdf (19 pages, 442739 bytes).
 PDF statistics:
- 127 PDF objects out of 1000 (max. 8388607)
- 80 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 78 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
