@@ -1,0 +1,31 @@
+\BOOKMARK [1][-]{section.1}{Introduktion}{}% 1
+\BOOKMARK [1][-]{section.2}{Arbejdsmetode og samarbejde}{}% 2
+\BOOKMARK [1][-]{section.3}{Analyse}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Problemstilling}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Funktioner}{section.3}% 5
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Afgr\346nsning}{subsection.3.2}% 6
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Datastrukturer}{subsection.3.2}% 7
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Samples og tidsm\345ling}{subsection.3.2}% 8
+\BOOKMARK [3][-]{subsubsection.3.2.4}{Indl\346sning af Data}{subsection.3.2}% 9
+\BOOKMARK [3][-]{subsubsection.3.2.5}{Filtre}{subsection.3.2}% 10
+\BOOKMARK [3][-]{subsubsection.3.2.6}{Peakdetektion}{subsection.3.2}% 11
+\BOOKMARK [3][-]{subsubsection.3.2.7}{Output}{subsection.3.2}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.8}{Programanalyse og ydeevne}{subsection.3.2}% 13
+\BOOKMARK [1][-]{section.4}{Design}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Sensor}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Filtre}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Peaks}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Implementering}{}% 18
+\BOOKMARK [2][-]{subsection.5.1}{Indl\346sning af data}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.2}{Filtrering}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.3}{Peak Detektion}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.4}{Output}{section.5}% 22
+\BOOKMARK [1][-]{section.6}{Resultater}{}% 23
+\BOOKMARK [2][-]{subsection.6.1}{Performance k\370retider}{section.6}% 24
+\BOOKMARK [2][-]{subsection.6.2}{Filtrerede R-peaks}{section.6}% 25
+\BOOKMARK [1][-]{section.7}{Diskussion}{}% 26
+\BOOKMARK [2][-]{subsection.7.1}{Detekterede R-peaks og advarsler}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.2}{Effektivisering af kode}{section.7}% 28
+\BOOKMARK [1][-]{section.8}{Konklusion}{}% 29
+\BOOKMARK [1][-]{section.9}{Litteraturliste}{}% 30
+\BOOKMARK [1][-]{section.10}{Bilag}{}% 31
