@@ -46,15 +46,12 @@ Da programmet skal kunne køre på en chip med begrænset hardware og batterilev
 
 Sidst men ikke mindst er det vigtigt at nævne, at softwaren skal være pålidelig og stabil, og altså altid fungere på samme måde og ikke pludselig fejle.
 
-\subsection{Funktioner}
-For at løse ovenstående problemstilling, skal der laves et program. Kravene til programmets funktionalitet beskrives i de følgende afsnit.
-
-\subsubsection{Afgrænsning}
+\subsection{Afgrænsning}
 I den virkelige verden, ville programmet skulle indlæse data fra ECG Scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. Dog skal programmet ikke indlæse flere datasamples ad gangen, men skal indlæse og behandle et element ad gangen, inden ny data indlæses.
 
 Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt vil det dog blot være et krav, at det vises på et display, hvis der er problemer.
 
-\subsubsection{Datastrukturer}
+\subsection{Datastrukturer}
 En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG Scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
 
 Først skulle vi finde den ideelle datastruktur at gemme de enkelte samples ned i. Vi overvejede: en kø, et dynamisk array, en hægtet liste og et begrænset array.
@@ -67,7 +64,7 @@ Et tredje alternativ ville være at bruge en hægtet liste, da det er nemt at in
 Det sidste alternativ, som også er den løsning vi har valgt at arbejde videre med, er et begrænset array. Man kan hurtigt få adgang til alle værdier, og det er hurtigt at indsætte og slette. Desværre kan man kun holde en bestemt mængde data, så man ikke kan gå tilbage og se data fra langt tilbage. Dette er en mindre detalje, da vi kun skal bruge få data at beregne filtre med, og derved ikke har brug for en lang historik af samples. 
 Vi har vurderet at et begrænset array er mest ideelt at bruge i denne situation, da det er hurtigt og ikke fylder så meget.
 
-\subsubsection{Samples og tidsmåling}
+\subsection{Samples og tidsmåling}
 Inputtet, som softwaren modtager fra ECG Scanneren, består af individuelle målinger (samples) for den målte elektriske aktivitet (styrke) af hjertet [ECG]. ECG Scanneren giver 250 samples som output per sekund. Altså er frekvensen:
 
 \begin{equation} 
@@ -82,19 +79,17 @@ Hver gang en sample indlæses, forøges en optællings-integer med én. På denn
 
 Det vurderes, at 200 dage er en tilstrækkelig levetid for programmet, idet det antages at programmet enten genstartes, når batteriet skal oplades/udskiftes, eller ved hvert lægecheck. Alternativt kunne man sætte værdien til 0, inden overløbet finder sted.
 
-\subsubsection{Indlæsning af Data}
+\subsection{Indlæsning af Data}
 Det er et krav, at man kun får en sample at arbejde med ad gangen, da det er sådan det kommer til at foregå på en rigtig patient. Der er givet en tekstfil med alle målingerne, men der skal altså kun indlæses én måling ad gangen. Hver gang en måling indlæses, indlæses værdien på linjen i tekstfilen, som patienten er nået til. For at læse en bestemt linje er scanneren, som indlæser værdier fra filen, nødt til at læse alle linjerne ned til den ønskede linje. Da dette tager længere tid jo flere målinger der har været, indlæses alle værdierne i stedet med det samme og gemmes i censoren. Hver gang funktionen getNextData kaldes fra main-funktionen, returneres dog kun én værdi og det virker derfor stadig som om at censoren kun har indlæst en enkelt ny værdi som returneres til main-funktionen, der derefter kan sende værdien til filtrering.
 
-\subsubsection{Filtre}
+\subsection{Filtre}
 Dataen behandles via filtre. Low og high-pass filtre fjerner støj i områder i dataen som på baggrund af frekvens eller amplitude adskiller sig fra, hvordan hjerteslag normalt ser ud i dataen. Andre filtre gør det nemmere for programmet at identificere hjerteslagene ved at forstærke og udglatte dataen. Filtrenes formler er givet på forhånd i deres rene (ikkeimplementerede) form, og formlerne udledes eller forklares ikke i denne rapport. En gennemgang af alle filtrene med grafiske fremstillinger kan ses i bilaget.
 
-\subsubsection{Peakdetektion}
+\subsection{Peakdetektion}
 Efter filtreringen detekteres højdepunkterne (peaks) i dataen, hvormed programmet vurderer om højdepunkterne kan betragtes som hjerteslag eller ej. Et forslag til en måde at gøre dette på er givet på forhånd i form at et flowchart. Flowchartet giver også et forslag til, hvordan programmet kan afgøre, om der er problemer med hjerterytmen eller om der er hjertestop. Disse forslag anvendes i vores program.
 
-\subsubsection{Output}
+\subsection{Output}
 Når en R-Peak er detekteret, skal patienten kunne se det med det samme, med oplysning om intensiteten af den fundne R-Peak og på hvilket tidspunkt den blev detekteret. Derudover skal patienten også kunne se hvor lang tid der er gået fra den sidst-detekterede R-Peak - RR-intervallet. Patienten skal også kunne se sin puls og advares hvis en R-Peak har en intensitet på under 2000 eller hvis der i træk har været fem RR-intervaller, som ikke har ligget inden for et bestemt interval.
-
-\subsubsection{Programanalyse og ydeevne}
 
 \section{Design}
 Vores program består af en main.c og tre andre c-filer, Peaks.c, Filter.c og Sensor.c, som main.c har adgang til via deres header-filer. 
