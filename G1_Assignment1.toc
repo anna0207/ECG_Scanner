@@ -1,63 +1,32 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\defcounter {refsection}{0}\relax 
 \select@language {danish}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Introduktion}{4}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Arbejdsmetode og samarbejde}{5}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Analyse}{5}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Problemstilling}{5}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Funktioner}{6}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.1}Afgr\IeC {\ae }nsning}{6}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.2}Datastrukturer}{6}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.3}Samples og tidsm\IeC {\r a}ling}{7}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.4}Indl\IeC {\ae }sning af Data}{7}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.5}Filtre}{8}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.6}Peakdetektion}{8}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.7}Output}{8}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.2.8}Programanalyse og ydeevne}{8}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Design}{8}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}Sensor}{9}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Filtre}{9}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Peaks}{10}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Implementering}{11}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{11}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2}Filtrering}{11}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3}Peak Detektion}{12}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.4}Output}{13}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Resultater}{13}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{13}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{14}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Diskussion}{14}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{14}
-\defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{14}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {8}Konklusion}{16}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {9}Bilag}{18}
+\contentsline {section}{\numberline {1}Introduktion}{3}
+\contentsline {section}{\numberline {2}Arbejdsmetode og samarbejde}{4}
+\contentsline {section}{\numberline {3}Analyse}{4}
+\contentsline {subsection}{\numberline {3.1}Problemstilling}{4}
+\contentsline {subsection}{\numberline {3.2}Funktioner}{5}
+\contentsline {subsubsection}{\numberline {3.2.1}Afgr\IeC {\ae }nsning}{5}
+\contentsline {subsubsection}{\numberline {3.2.2}Datastrukturer}{5}
+\contentsline {subsubsection}{\numberline {3.2.3}Samples og tidsm\IeC {\r a}ling}{6}
+\contentsline {subsubsection}{\numberline {3.2.4}Indl\IeC {\ae }sning af Data}{6}
+\contentsline {subsubsection}{\numberline {3.2.5}Filtre}{7}
+\contentsline {subsubsection}{\numberline {3.2.6}Peakdetektion}{7}
+\contentsline {subsubsection}{\numberline {3.2.7}Output}{7}
+\contentsline {subsubsection}{\numberline {3.2.8}Programanalyse og ydeevne}{7}
+\contentsline {section}{\numberline {4}Design}{7}
+\contentsline {subsection}{\numberline {4.1}Sensor}{8}
+\contentsline {subsection}{\numberline {4.2}Filtre}{8}
+\contentsline {subsection}{\numberline {4.3}Peaks}{9}
+\contentsline {section}{\numberline {5}Implementering}{10}
+\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{10}
+\contentsline {subsection}{\numberline {5.2}Filtrering}{10}
+\contentsline {subsection}{\numberline {5.3}Peak Detektion}{11}
+\contentsline {subsection}{\numberline {5.4}Output}{12}
+\contentsline {section}{\numberline {6}Resultater}{12}
+\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{12}
+\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{13}
+\contentsline {section}{\numberline {7}Diskussion}{13}
+\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{13}
+\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{13}
+\contentsline {section}{\numberline {8}Konklusion}{15}
+\contentsline {section}{\numberline {9}Litteraturliste}{16}
+\contentsline {section}{\numberline {10}Bilag}{17}
