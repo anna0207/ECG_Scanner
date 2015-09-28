@@ -17,39 +17,47 @@
 \newpage
 
 \section*{Abstract}
+<<<<<<< HEAD
 An ECG shows the electrical activity of the heart. 
+=======
+An electrocardiography (ECG) shows the electrical activity of the heart and therefore makes it possible to detect QRS complexes, which shows the depolarization of the ventricles in the heart\cite{3}. This paper examines the QRS complexes from an ECG device. This is done by creating a virtual personal ECG scanner coded in C and based on a real-time QRS algorithm, which will filter raw data fetched from a patient, detect the heartbeat from the QRS complexes\cite{1}, and warn the patient if the heartbeat is unstable. Since this is not a real scanner, the raw data is read from a text file, but the processing of it is based on real ECG devices.
+>>>>>>> origin/master
 
 \tableofcontents
 
 \newpage
 \section{Introduktion}
+<<<<<<< HEAD
 Vi er tre bachelorstuderende fra softwareteknologi på DTU på tredje semester, der i vores første ud af tre projekter i kurset, 02131 indlejrede systemer, har arbejdet med data fra en ECG Scanner i form af en simuleret hjerterytme. I forbindelse med forløbet, er vi blevet undervist i c, som vi derudfra har anvendt til at skrive et program, der behandler denne data. De overordnede krav til programmets funktionalitet blev givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
+=======
+Følgende rapport omhandler en ud af tre projekter i kurset, \textit{02131 indlejrede systemer}. Projektet drejer sig om uviklingen af en ECG-scanner, der måler en simuleret hjerterytme. Scanneren filtrerer målingerne, analyserer dem og kan derudfra informere en patient om bl.a. patientens puls. I forbindelse med forløbet, er vi blevet undervist i C, som vi har anvendt til at skrive et program, der kommer til at fungere som en ECG-scanner. De overordnede krav til programmets funktionalitet er givet på forhånd, og der vil i denne rapport fokuseres på tankerne bag programmet og kravene dertil, via en analyse, design og implementering samt slutresultatet med en tilhørende diskussion og konklusion.
+>>>>>>> origin/master
 
 
 \newpage
 \section{Arbejdsmetode og samarbejde}
 Der er ofte mange måder at løse forskellige problemer på. Vi har i samarbejde taklet disse problemer ved først at lave en brainstorm over mulige løsninger samt deres fordele og ulemper. Derudfra har vi valgt de løsninger, som vi vurderede løste problemet bedst.
 
-Til start udviklede vi en samarbejdskontrakt, hvor bl.a. vores ambitioner og samarbejdspolitikker blev formuleret. Vi har arbejdet sammen i de lektioner, vi har fået til rådighed på DTU, og har flere gange mødtes på andre tidspunkter og arbejdet sammen. En del af arbejdet er blevet delt op imellem os, hvoraf vi hver i sær har arbejdet hjemmefra. For at udnytte gruppens ressourcer så godt som muligt, har vi alle lavet noget samtidigt i form af individuel kodeskrivning, pair-programming, individuel rapportskrivning eller gruppediskussioner.
+Først udviklede vi en samarbejdskontrakt, hvor bl.a. vores ambitioner og samarbejdspolitikker blev formuleret. Vi har arbejdet sammen i de lektioner, som vi har fået til rådighed på DTU, og har flere gange mødtes på andre tidspunkter og arbejdet sammen. En del af arbejdet er blevet delt op imellem os, hvorefter vi hver især har arbejdet med det derhjemme. For at udnytte gruppens ressourcer så godt som muligt, har vi alle lavet noget samtidigt i form af individuel kodeskrivning, pair-programming, individuel rapportskrivning eller gruppediskussioner.
 
-Vi har været gode til at overholde vores aftaler, og der har ikke været problemer med gruppesamarbejdet. Selve koden er skrevet i eclipse og delt via git, mens rapporten er skrevet og delt via Google Docs og kompileret med Latex.
+Vi har været gode til at overholde vores aftaler, og der har ikke været problemer med gruppesamarbejdet. Selve koden er skrevet i \textit{Eclipse} og delt gennem \textit{GitHub}, mens rapporten er skrevet og delt gennem \textit{Google Docs} og kompileret med \textit{Latex}.
 
 \section{Analyse}
 \subsection{Problemstilling}
-For mennesker med hjerteproblemer, er det vigtigt at få den rette hjælp, da sådanne problemer i nogle tilfælde kan medfører hjertestop, hvoraf personen kan miste livet. Disse hjerteproblemer opstår ofte uregelmæssigt, og kan derfor være svære at detektere hos en læge eller på et sygehus, hvor man vil opholde sig i begrænsede mængder af tid.
+For mennesker med hjerteproblemer er det vigtigt at få den rette hjælp, da sådanne problemer i nogle tilfælde kan medføre hjertestop, hvoraf personen kan miste livet. Disse hjerteproblemer opstår ofte uventet, og kan derfor være svære at detektere hos en læge eller på et sygehus, hvor man opholder sig i begrænset tid.
 
-En ECG Scanner måler elektrisk aktivitet og bruges til at måle en persons hjerterytme. Scanneren kan anvendes over længere tidsforløb og er mobil, hvilket gør, at man ikke konstant skal være under opsyn for at kunne få en diagnose på hjerteproblemerne og hjælp, hvis man skulle få hjertestop.
+En ECG-scanner måler elektrisk aktivitet og bruges til at måle en persons hjerterytme. Scanneren kan anvendes over længere tidsforløb og er mobil, hvilket gør, at man ikke konstant skal være under opsyn for at kunne få en diagnose på hjerteproblemerne eller få hjælp, hvis man skulle få hjertestop.
 
-ECG Scanneren i sig selv kan dog ikke hjælpe meget uden den rette software til at indlæse dataen, behandle og tolke den. Softwaren skal derudover også kunne informere brugeren om hjertets tilstand. En tilsynsførende skal også kunne blive alarmeret, hvis der er noget galt. Det er vigtigt, at softwaren gør alt dette i realtid og f.eks. ikke alarmerer lægen for sent. Derudover skal den tilsynsførende kunne se, om der har været uregelmæssigheder fra besøg til besøg.
+ECG-scanneren i sig selv kan dog ikke hjælpe meget uden den rette software til at indlæse data, behandle og fortolke det. Softwaren skal derudover også kunne informere patienten om hjertets tilstand. En tilsynsførende skal også kunne blive alarmeret, hvis der er noget galt. Det er vigtigt, at softwaren gør alt dette i realtid og f.eks. ikke alarmerer lægen for sent. Den tilsynsførende skal også kunne se, om der har været uregelmæssigheder fra besøg til besøg.
 
-Da programmet skal kunne køre på en chip med begrænset hardware og batterilevetid, må det hverken bruge for meget plads eller regnekraft og deraf strøm. Dertil bør der heller ikke blive anvendt datatyper som floats, som bruger relativt meget plads, og ikke er direkte understøttet af alt hardware.
+Da programmet skal kunne køre på en chip med begrænset hardware og batterilevetid, må det hverken bruge for meget plads eller regnekraft og deraf strøm. Der bør heller ikke blive anvendt datatyper som floats, som bruger relativt meget plads, og ikke er direkte understøttet af alt hardware.
 
-Sidst men ikke mindst er det vigtigt at nævne, at softwaren skal være pålidelig og stabil, og altså altid fungere på samme måde og ikke pludselig fejle.
+Sidst men ikke mindst er det vigtigt at nævne, at softwaren skal være pålidelig og stabil, og altså altid fungere på samme måde og ikke pludseligt fejle.
 
 \subsection{Afgrænsning}
-I den virkelige verden, ville programmet skulle indlæse data fra ECG Scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. Dog skal programmet ikke indlæse flere datasamples ad gangen, men skal indlæse og behandle et element ad gangen, inden ny data indlæses.
+I den virkelige verden, ville programmet skulle indlæse data fra ECG-scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. For stadig at virke som om der foretages målinger i realtid, skal programmet ikke indlæse hele tekstfilen på én gang, men én måling skal bearbejdes før den næste indlæses.
 
-Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt vil det dog blot være et krav, at det vises på et display, hvis der er problemer.
+Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren alarmeres, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til patienten. I dette projekt er det dog blot et krav, at det vises på et display, hvis der er hjerteproblemer.
 
 \subsection{Datastrukturer}
 En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Det er derfor essentielt, hvordan vi opbevarer data fra sensoren. Vi kan forvente 250 samples pr sekund, derfor skal datastrukturen være både hurtig og bruge mindst plads muligt.

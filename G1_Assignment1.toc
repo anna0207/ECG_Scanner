@@ -1,4 +1,5 @@
 \select@language {danish}
+<<<<<<< HEAD
 \contentsline {section}{\numberline {1}Introduktion}{3}
 \contentsline {section}{\numberline {2}Arbejdsmetode og samarbejde}{4}
 \contentsline {section}{\numberline {3}Analyse}{4}
@@ -28,3 +29,34 @@
 \contentsline {section}{\numberline {8}Konklusion}{14}
 \contentsline {section}{\numberline {9}Litteraturliste}{15}
 \contentsline {section}{\numberline {10}Bilag}{16}
+=======
+\contentsline {section}{\numberline {1}Introduktion}{4}
+\contentsline {section}{\numberline {2}Arbejdsmetode og samarbejde}{5}
+\contentsline {section}{\numberline {3}Analyse}{5}
+\contentsline {subsection}{\numberline {3.1}Problemstilling}{5}
+\contentsline {subsection}{\numberline {3.2}Afgr\IeC {\ae }nsning}{6}
+\contentsline {subsection}{\numberline {3.3}Datastrukturer}{6}
+\contentsline {subsection}{\numberline {3.4}Samples og tidsm\IeC {\r a}ling}{7}
+\contentsline {subsection}{\numberline {3.5}Indl\IeC {\ae }sning af Data}{7}
+\contentsline {subsection}{\numberline {3.6}Filtre}{8}
+\contentsline {subsection}{\numberline {3.7}Peakdetektion}{8}
+\contentsline {subsection}{\numberline {3.8}Output}{8}
+\contentsline {section}{\numberline {4}Design}{8}
+\contentsline {subsection}{\numberline {4.1}Sensor}{8}
+\contentsline {subsection}{\numberline {4.2}Filtre}{9}
+\contentsline {subsection}{\numberline {4.3}Peaks}{10}
+\contentsline {section}{\numberline {5}Implementering}{11}
+\contentsline {subsection}{\numberline {5.1}Indl\IeC {\ae }sning af data}{11}
+\contentsline {subsection}{\numberline {5.2}Filtrering}{11}
+\contentsline {subsection}{\numberline {5.3}Peak Detektion}{12}
+\contentsline {subsection}{\numberline {5.4}Output}{13}
+\contentsline {section}{\numberline {6}Resultater}{13}
+\contentsline {subsection}{\numberline {6.1}Performance k\IeC {\o }retider}{13}
+\contentsline {subsection}{\numberline {6.2}Filtrerede R-peaks}{14}
+\contentsline {section}{\numberline {7}Diskussion}{14}
+\contentsline {subsection}{\numberline {7.1}Detekterede R-peaks og advarsler}{14}
+\contentsline {subsection}{\numberline {7.2}Effektivisering af kode}{14}
+\contentsline {section}{\numberline {8}Konklusion}{16}
+\contentsline {section}{\numberline {9}Litteraturliste}{17}
+\contentsline {section}{\numberline {10}Bilag}{18}
+>>>>>>> origin/master
