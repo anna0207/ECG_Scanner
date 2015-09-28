@@ -47,9 +47,9 @@ Da programmet skal kunne køre på en chip med begrænset hardware og batterilev
 Sidst men ikke mindst er det vigtigt at nævne, at softwaren skal være pålidelig og stabil, og altså altid fungere på samme måde og ikke pludseligt fejle.
 
 \subsection{Afgrænsning}
-I den virkelige verden, ville programmet skulle indlæse data fra ECG Scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. Dog skal programmet ikke indlæse flere datasamples ad gangen, men skal indlæse og behandle et element ad gangen, inden ny data indlæses.
+I den virkelige verden, ville programmet skulle indlæse data fra ECG-scanneren i realtid. I vores tilfælde skal programmet dog blot indlæse data fra en tekstfil, som er blevet udleveret på forhånd. For stadig at virke som om der foretages målinger i realtid, skal programmet ikke indlæse hele tekstfilen på én gang, men én måling skal bearbejdes før den næste indlæses.
 
-Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren ville blive alarmeret, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til éns lokation. I dette projekt vil det dog blot være et krav, at det vises på et display, hvis der er problemer.
+Det ville normalt også være et krav at den tilsynsførende og ikke kun brugeren alarmeres, hvis der skulle opstå problemer med hjerterytmen, eller at en ambulance evt. automatisk ville blive sendt ud til patienten. I dette projekt er det dog blot et krav, at det vises på et display, hvis der er hjerteproblemer.
 
 \subsection{Datastrukturer}
 En ECG Scanner er et indlejret system, der skal være så effektiv som muligt på begrænset plads. Da et program til en ECG Scanner kan udformes på mange forskellige måder, har vi gjort os en del overvejelser om hvilken løsning, der passer bedst i denne situation.
